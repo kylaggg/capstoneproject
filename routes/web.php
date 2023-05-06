@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PageController;
-use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,12 +17,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Page Controller
-Route::controller(PageController::class)->group(function(){
-    Route::get('/login', 'login');
-});
-
-// User Authentication Controller
-Route::controller(AuthController::class)->group(function () {
-    Route::post('/login', 'login');
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 });
