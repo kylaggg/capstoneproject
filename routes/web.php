@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +17,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+// Page Controller
+Route::controller(PageController::class)->group(function(){
+    Route::get('/login', 'login');
+});
+
+// User Authentication Controller
+Route::controller(AuthController::class)->group(function () {
+    Route::post('/login', 'login');
 });
