@@ -4,11 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
     "content-hash": "e440ac5f063e75ec5b722453530c5c63",
-=======
-    "content-hash": "8e6e7fe5fd9d19060838a2fee2857ca4",
->>>>>>> origin/main
     "packages": [
         {
             "name": "brick/math",
@@ -141,7 +137,6 @@
             "time": "2022-10-27T11:44:00+00:00"
         },
         {
-<<<<<<< HEAD
             "name": "doctrine/cache",
             "version": "2.2.0",
             "source": {
@@ -481,8 +476,6 @@
             "time": "2022-10-12T20:59:15+00:00"
         },
         {
-=======
->>>>>>> origin/main
             "name": "doctrine/inflector",
             "version": "2.0.6",
             "source": {
@@ -2679,7 +2672,6 @@
             "time": "2023-02-25T19:38:58+00:00"
         },
         {
-<<<<<<< HEAD
             "name": "psr/cache",
             "version": "3.0.0",
             "source": {
@@ -2729,8 +2721,6 @@
             "time": "2021-02-03T23:26:27+00:00"
         },
         {
-=======
->>>>>>> origin/main
             "name": "psr/container",
             "version": "2.0.2",
             "source": {
@@ -6600,16 +6590,16 @@
         },
         {
             "name": "phpunit/php-file-iterator",
-            "version": "4.0.1",
+            "version": "4.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-file-iterator.git",
-                "reference": "fd9329ab3368f59fe1fe808a189c51086bd4b6bd"
+                "reference": "5647d65443818959172645e7ed999217360654b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/fd9329ab3368f59fe1fe808a189c51086bd4b6bd",
-                "reference": "fd9329ab3368f59fe1fe808a189c51086bd4b6bd",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/5647d65443818959172645e7ed999217360654b6",
+                "reference": "5647d65443818959172645e7ed999217360654b6",
                 "shasum": ""
             },
             "require": {
@@ -6648,7 +6638,8 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-file-iterator/issues",
-                "source": "https://github.com/sebastianbergmann/php-file-iterator/tree/4.0.1"
+                "security": "https://github.com/sebastianbergmann/php-file-iterator/security/policy",
+                "source": "https://github.com/sebastianbergmann/php-file-iterator/tree/4.0.2"
             },
             "funding": [
                 {
@@ -6656,7 +6647,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-02-10T16:53:14+00:00"
+            "time": "2023-05-07T09:13:23+00:00"
         },
         {
             "name": "phpunit/php-invoker",
