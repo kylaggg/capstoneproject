@@ -19,7 +19,13 @@
         </center>
         <div class="container" id="codeContainer">
             <center>
+                @if (Session::has('resend_code_success'))
+                <div class="alert alert-success" role="alert" id="resent_alert">
+                    {{ Session::get('resend_code_success') }}
+                </div>
+            @endif
                 <p>A four-digit code has been sent to your email. Enter the code below:</p>
+                <i class='bx bx-refresh'></i><a href={{route('resend-code')}}>Resend code</a>
             </center>
             <form method="POST" id="codeForm" action="{{ route('reset-password-verify-code') }}">
                 @csrf
@@ -67,6 +73,13 @@
             }
             return true;
         }
+
+        $(document).ready(function() {
+            $('#resent_alert').alert();
+            setTimeout(() => {
+                $('#resent_alert').alert('close');
+            }, 3000);
+        });
     </script>
 </body>
 

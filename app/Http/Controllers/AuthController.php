@@ -77,7 +77,8 @@ class AuthController extends Controller
         }
     }
 
-    public function verifyTwoFactorAuth(Request $request){
+    public function verifyTwoFactorAuth(Request $request)
+    {
         $request->validate([
             'code1' => 'required|numeric',
             'code2' => 'required|numeric',
@@ -156,7 +157,7 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'password' => 'required|min:8|max:20|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/',
-            'confirm_password' => 'required|min:8|max:20|same:password'
+            'confirm_password' => 'required|same:password'
         ], [
                 'password.required' => 'Please enter your password.',
                 'password.min' => 'Password must have a minimum length of 8.',
@@ -169,7 +170,7 @@ class AuthController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        if ($request->password == $request->confirm_password){
+        if ($request->password == $request->confirm_password) {
             $email = session('email');
             $accounts = Accounts::where('email', '=', $email)->first();
             $hashedPassword = Hash::make($request->password);
@@ -177,5 +178,17 @@ class AuthController extends Controller
             $accounts->save();
             return redirect()->route('viewLogin')->with('password-reset-success', 'Your password has been reset.');
         }
+    }
+
+    public function sendCode()
+    {
+        $email = session('email');
+        $code = rand(1000, 9999);
+        session()->put('verification_code', $code);
+
+        $accounts = Accounts::where('email', '=', $email)->first();
+        $accounts->verification_code = $code;
+        $accounts->save();
+        return back()->with('resend_code_success', 'Verification code has been sent again.');
     }
 }

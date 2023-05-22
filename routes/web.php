@@ -26,6 +26,7 @@ Route::post('/two-factor', [AuthController::class, 'verifyTwoFactorAuth'])->name
 Route::post('/reset-password/verify-email', [AuthController::class, 'step1_VerifyEmail'])->name('reset-password-verify-email');
 Route::post('/reset-password/verify-code', [AuthController::class, 'step2_VerifyCode'])->name('reset-password-verify-code');
 Route::post('/reset-password/reset', [AuthController::class, 'step3_ResetPassword'])->name('reset-password');
+Route::get('two-factor/resend-code', [AuthController::class, 'sendCode'])->name('resend-code');
 
 // Dashboard 
 Route::get('/dashboard', [PageController::class, 'dashboard'])->name('viewDashboard');

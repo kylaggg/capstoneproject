@@ -112,13 +112,10 @@ p {
   border-radius: 10px;
 }
 
-<<<<<<< HEAD
 .container#emailContainer {
   padding: 0px;
 }
 
-=======
->>>>>>> origin/main
 .shiftDown {
   margin-top: 70px;
   /* change this value to adjust the margin */
@@ -161,13 +158,10 @@ body#loginPage {
   margin-bottom: 20px;
 }
 
-<<<<<<< HEAD
 .alert {
   margin-top: 10px;
 }
 
-=======
->>>>>>> origin/main
 #email,
 #firstName,
 #lastName,
