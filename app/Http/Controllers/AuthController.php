@@ -57,15 +57,26 @@ class AuthController extends Controller
 
         if ($accounts) {
             if ($accounts->status == "active") {
-                if (Hash::check($request->password, $accounts->password)) {
+                if ($request->password == $accounts->default_password || Hash::check($request->password, $accounts->password)) {
+
                     $request->session()->put('account_id', $accounts->account_id);
-                    $code = rand(1000, 9999);
-                    $accounts->verification_code = $code;
                     $request->session()->put('email', $request->email);
-                    $request->session()->put('verification_code', $code);
-                    $accounts->save();
-                    Mail::to($request->email)->send(new VerificationCode($code));
-                    return redirect()->route('viewTwoFactorAuth');
+                    $request->session()->put('user_level', $accounts->type);
+
+
+                    if ($accounts->type == 'AD') { // For Demo Purposes only
+                        session()->put('full_name', 'Administrator'); // wala pang account
+                        session()->put('title', 'Administrator');
+                        session()->put('user_level', 'AD');
+                        return redirect()->route('viewAdminDashboard');
+                    } else {
+                        $code = rand(1000, 9999);
+                        $accounts->verification_code = $code;
+                        $request->session()->put('verification_code', $code);
+                        Mail::to($request->email)->send(new VerificationCode($code));
+                        $accounts->save();
+                        return redirect()->route('viewTwoFactorAuth');
+                    }
                 } else {
                     return back()->with('fail', 'Incorrect Password.');
                 }
@@ -91,7 +102,13 @@ class AuthController extends Controller
         $accounts = Accounts::where('email', '=', $email)->first();
 
         if ($accounts->verification_code == $code) {
-            return redirect()->route('viewDashboard');
+            if ($accounts->type == 'IS') {
+                return redirect()->route('viewISDashboard');
+            } elseif ($accounts->type == 'PE') {
+                return redirect()->route('viewPEDashboard');
+            } else {
+                return redirect()->route('viewCEDashboard');
+            }
         } else {
             return back()->with('fail', 'Code is incorrect. Please try again.');
         }

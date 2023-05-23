@@ -8,8 +8,5 @@ class PageController extends Controller
 {
     // User Authentication
     
-    public function dashboard()
-    {
-        return view('dashboard.dashboard');
-    }
+    
 }

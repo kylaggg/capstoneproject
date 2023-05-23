@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Route;
-Use App\Http\Controllers\PageController;
+Use App\Http\Controllers\EvaluationYearController;
+Use App\Http\Controllers\AdminDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,5 +31,10 @@ Route::post('/reset-password/reset', [AuthController::class, 'step3_ResetPasswor
 Route::get('two-factor/resend-code', [AuthController::class, 'sendCode'])->name('resend-code');
 
 // Dashboard 
-Route::get('/dashboard', [PageController::class, 'dashboard'])->name('viewDashboard');
+Route::get('/dashboard-admin', [AdminDashboardController::class, 'displayAdminDashboard'])->name('viewAdminDashboard');
 
+// Employee User Table
+Route::get('/employees', [EmployeeController::class,'displayEmployeeTable'])->name('viewEmployeeTable');
+
+// Evaluation Year
+Route::get('evaluation-year', [EvaluationYearController::class,'displayEvaluationYear'])->name('viewEvaluationYear');
