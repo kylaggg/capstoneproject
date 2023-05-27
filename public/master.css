@@ -275,44 +275,127 @@ body {
     color: #f5f6fa !important;
 }
 
-h1 {
+h1,
+h2,
+h3,
+h4, h5{
     color: #164783 !important;
+}
+
+p, label {
+    color: #212427 !important;
 }
 
 .content-container {
     background: #ffffff;
     padding: 30px;
-    height: 100%;
+    height: auto;
     width: 100%;
     border-radius: 15px;
+    margin-bottom: 20px;
+    flex: 1;
 }
 
-tr {
-    background-color: #c3d7f1;
-}
-
-text {
-    color: #143a67;
+text, .text-blue {
+    color: #143a67 !important;
 }
 
 .small-column {
-    width: 100px;
+    width: 100px !important;
 }
 
 .medium-column {
-    width: 200px;
+    width: 200px !important;
 }
 
 .large-column {
-    width: 300px;
+    width: 300px !important;
+}
+
+.empty-cell {
+    height: 50px !important;
 }
 
 thead {
     color: #143a67;
+    background-color: #c3d7f1;
+}
+
+tbody {
+    vertical-align: middle;
+}
+
+.text-justify {
+    text-align: justify !important;
+}
+
+.text-middle {
+    text-align: center !important;
 }
 
 .table,
 .table thead th,
 .table tbody td {
     text-align: center;
+}
+
+.table {
+    margin-bottom: 30px !important;
+}
+
+.table-bordered {
+    border: solid #c3d7f1 1px !important;
+}
+
+textarea {
+    margin: 0px !important;
+    resize: none;
+    padding: 8px;
+    height: 100px;
+    width: 100%;
+    border-radius: 5px;
+    resize: none !important;
+}
+
+.textarea {
+    margin: 0px;
+    padding: 8px;
+    height: 100%;
+    width: 100%;
+    border: 0px;
+    resize: none;
+}
+
+.td-textarea {
+    padding: 0px !important;
+    margin: 0px;
+}
+
+.search-box {
+    width: 300px !important;
+    float: right;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.position-right {
+    margin-left: auto;
+    margin-right: 0px;
+}
+
+.form-control-right {
+    width: 300px !important;
+    text-align: right;
+}
+
+/* BUTTONS */
+.btn-primary {
+    background-color: #0b2a51 !important;
+    border: none !important;
+}
+
+.btn-primary:hover {
+    background-color: #5477a4 !important;
 }

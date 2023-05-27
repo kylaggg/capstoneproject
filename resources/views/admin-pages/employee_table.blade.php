@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="content-container">
-        <div class="input-group mb-3" id="search-box">
+        <div class="input-group mb-3 search-box">
             <input type="text" class="form-control" placeholder="Search">
             <button class="btn btn-outline-secondary" type="button">
                 <i class='bx bx-search'></i>
@@ -30,5 +30,62 @@
                 <!-- Data -->
             </tbody>
         </table>
+        <div class='d-flex justify-content-end gap-3 mt-2'>
+            <input class="form-control large-column" type="file">
+            <button class="btn btn-primary large-column">Upload Excel</button>
+        </div>
+        <div class='d-flex justify-content-end'>
+            <button class="btn btn-primary large-column mt-2" type="button" data-bs-toggle="modal"
+                data-bs-target="#addUserModal">Add User</button>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add New User</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form>
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-2">
+                            <label>Adamson Email:</label>
+                            <input type="email" class="form-control" value="{{old('email')}}">        
+                        </div>
+                        <div class="mb-2">
+                            <label>Employee Number:</label>
+                             <input type="number" class="form-control" value="{{old('employee_number')}}">
+                        </div>
+                        <div class="mb-2">
+                            <label>First Name:</label>
+                            <input type="text" class="form-control" value="{{old('first_name')}}">
+                        </div>
+                        <div class="mb-2">
+                            <label>Last Name:</label>
+                            <input type="text" class="form-control" value="{{old('last_name')}}">
+                        </div>
+                        <div class="mb-2">
+                            <label>Type (User Level):</label>
+                            <select class="form-control">
+                                <option value="" selected> 
+                                    Select Type</option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label>Department:</label>
+                            <select class="form-control">
+                                <option value="" selected>Select Department</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Add User</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 @endsection
