@@ -300,6 +300,12 @@ text, .text-blue {
     color: #143a67 !important;
 }
 
+.xxs-column {
+    width: 25px !important;
+}
+.extra-small-column{
+    width: 50px !important; 
+}
 .small-column {
     width: 100px !important;
 }
@@ -314,6 +320,10 @@ text, .text-blue {
 
 .empty-cell {
     height: 50px !important;
+}
+
+.full-width {
+    width: 100%;
 }
 
 thead {
@@ -345,6 +355,10 @@ tbody {
 
 .table-bordered {
     border: solid #c3d7f1 1px !important;
+}
+
+tfoot tr {
+    background-color: #c3d7f1;
 }
 
 textarea {
@@ -398,4 +412,15 @@ textarea {
 
 .btn-primary:hover {
     background-color: #5477a4 !important;
+}
+
+.btn-outline-primary {
+    border: solid #0b2a51 1px !important;
+    color: #0b2a51 !important
+}
+
+.btn-outline-primary:hover {
+    border: solid #0b2a51 1px !important;
+    color: white !important;
+    background-color: #0b2a51 !important;
 }

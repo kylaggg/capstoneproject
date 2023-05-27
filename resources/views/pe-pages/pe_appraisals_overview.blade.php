@@ -32,16 +32,16 @@
         <tbody>
             <tr>
                 <td>
-                    <a href="#" class="btn btn-outline-primary" role="button">Self-Appraise</a>
+                    <a href="{{route('viewSelfEvaluationForm')}}" class="btn btn-outline-primary full-width" role="button">Self-Appraise</a>
                 </td>
                 <td>
-                    <a href="#" class="btn btn-outline-primary" role="button">Self-Appraise</a>
+                    <a href="#" class="btn btn-outline-primary full-width" role="button">View</a>
                 </td>
                 <td>
-                    <a href="#" class="btn btn-outline-primary" role="button">Self-Appraise</a>
+                    <a href="#" class="btn btn-outline-primary full-width" role="button">View</a>
                 </td>
                 <td>
-                    <a href="#" class="btn btn-outline-primary" role="button">Self-Appraise</a>
+                    <a href="#" class="btn btn-outline-primary full-width" role="button">View</a>
                 </td>
             </tr>
         </tbody>

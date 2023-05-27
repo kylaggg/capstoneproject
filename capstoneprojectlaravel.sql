@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:8889
--- Generation Time: May 27, 2023 at 02:25 PM
--- Server version: 5.7.39
--- PHP Version: 8.2.0
+-- Host: 127.0.0.1
+-- Generation Time: May 27, 2023 at 07:27 PM
+-- Server version: 10.4.25-MariaDB
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -49,7 +49,7 @@ INSERT INTO `accounts` (`account_id`, `email`, `employee_number`, `default_passw
 (2, 'admin2@adamson.edu.ph', 202011222, 'DEFAULT', NULL, 'false', 'AD', 8632, NULL, 'active'),
 (3, 'admin3@adamson.edu.ph', 202011333, 'DEFAULT', NULL, 'false', 'AD', NULL, NULL, 'active'),
 (4, 'admin4@adamson.edu.ph', 2020114444, 'DEFAULT', NULL, 'false', 'AD', NULL, NULL, 'active'),
-(5, 'maori.trixia.leonardo@adamson.edu.ph', 202011989, 'DEFAULT', '$2y$10$IzCSE5/2BM4DFI6uOX2ifO9u.E5p9seMI/86A/ygb89/5cqcVG38K', 'false', 'PE', 8841, 'true', 'active');
+(5, 'maori.trixia.leonardo@adamson.edu.ph', 202011989, 'DEFAULT', '$2y$10$IzCSE5/2BM4DFI6uOX2ifO9u.E5p9seMI/86A/ygb89/5cqcVG38K', 'false', 'PE', 1353, 'true', 'active');
 
 -- --------------------------------------------------------
 
@@ -64,7 +64,7 @@ CREATE TABLE `failed_jobs` (
   `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -114,7 +114,7 @@ CREATE TABLE `personal_access_tokens` (
   `tokenable_id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci,
+  `abilities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,

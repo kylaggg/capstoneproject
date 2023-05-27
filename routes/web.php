@@ -15,6 +15,7 @@ use App\Http\Controllers\ImmediateSuperior\ISDashboardController;
 use App\Http\Controllers\PermanentEmployee\PEAppraisalsController;
 use App\Http\Controllers\PermanentEmployee\PEDashboardController;
 use App\Http\Controllers\PermanentEmployee\PEInternalCustomerController;
+use App\Http\Controllers\PermanentEmployee\SelfEvaluationController;
 use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
 
@@ -71,8 +72,13 @@ Route::get('/is-appraisals-overview', [ISAppraisalsOverviewController::class, 'd
 Route::get('/settings', [SettingsController::class, 'displaySettings'])->name('viewSettings');
 
 /* ----- PERMANENT EMPLOYEE ----- */
-Route::get('pe-dashboard', [PEDashboardController::class, 'displayPEDashboard'])->name('viewPEDashboard');
+// Dashboard
+Route::get('/pe-dashboard', [PEDashboardController::class, 'displayPEDashboard'])->name('viewPEDashboard');
 
-Route::get('pe-appraisals-overview', [PEAppraisalsController::class, 'displayPEAppraisalsOverview'])->name('viewPEAppraisalsOverview');
+// Appraisals Overview
+Route::get('/pe-appraisals-overview', [PEAppraisalsController::class, 'displayPEAppraisalsOverview'])->name('viewPEAppraisalsOverview');
+Route::get('/self-evaluation', [SelfEvaluationController::class, 'displaySelfEvaluationForm'])->name('viewSelfEvaluationForm');
 
-Route::get('pe-internal-customers-overview', [PEInternalCustomerController::class, 'displayICOverview'])->name('viewICOverview');
+// Internal Customers
+Route::get('/pe-internal-customers-overview', [PEInternalCustomerController::class, 'displayICOverview'])->name('viewICOverview');
+
