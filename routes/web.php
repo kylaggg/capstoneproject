@@ -1,8 +1,23 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+
+use App\Http\Controllers\Admin\AdminAppraisalsOverviewController;
+use App\Http\Controllers\Admin\EditableAppraisalFormController;
+use App\Http\Controllers\Admin\EditableInternalCustomerFormController;
+use App\Http\Controllers\Admin\EmployeeController;
+use App\Http\Controllers\Admin\EvaluationYearController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+
+use App\Http\Controllers\ImmediateSuperior\ISAppraisalsOverviewController;
+use App\Http\Controllers\ImmediateSuperior\ISDashboardController;
+
+use App\Http\Controllers\PermanentEmployee\PEAppraisalsController;
+use App\Http\Controllers\PermanentEmployee\PEDashboardController;
+use App\Http\Controllers\PermanentEmployee\PEInternalCustomerController;
+use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
-Use App\Http\Controllers\PageController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,5 +44,35 @@ Route::post('/reset-password/reset', [AuthController::class, 'step3_ResetPasswor
 Route::get('two-factor/resend-code', [AuthController::class, 'sendCode'])->name('resend-code');
 
 // Dashboard 
-Route::get('/dashboard', [PageController::class, 'dashboard'])->name('viewDashboard');
+Route::get('/dashboard-admin', [AdminDashboardController::class, 'displayAdminDashboard'])->name('viewAdminDashboard');
+Route::get('/dashboard-immediate-superior', [ISDashboardController::class, 'displayISDashboard'])->name('viewISDashboard');
 
+/* ----- ADMIN ----- */
+//Appraisals Overview
+Route::get('/admin-appraisals-overview', [AdminAppraisalsOverviewController::class, 'displayAdminAppraisalsOverview'])->name('viewAdminAppraisalsOverview');
+
+// Employee User Table
+Route::get('/employees', [EmployeeController::class,'displayEmployeeTable'])->name('viewEmployeeTable');
+
+// Evaluation Year
+Route::get('/evaluation-year', [EvaluationYearController::class,'displayEvaluationYear'])->name('viewEvaluationYear');
+
+// Editable Appraisal Form
+Route::get('/editable-appraisal-form', [EditableAppraisalFormController::class, 'displayEditableAppraisalForm'])->name('viewEditableAppraisalForm');
+
+// Editable Internal Customer Form
+Route::get('/editable-internal-customer-form', [EditableInternalCustomerFormController::class, 'displayEditableInternalCustomerForm'])->name('viewEditableInternalCustomerForm');
+
+/* ----- IMMEDIATE SUPERIOR ----- */
+// Appraisals Overview
+Route::get('/is-appraisals-overview', [ISAppraisalsOverviewController::class, 'displayISAppraisalsOverview'])->name('viewISAppraisalsOverview');
+
+// Settings
+Route::get('/settings', [SettingsController::class, 'displaySettings'])->name('viewSettings');
+
+/* ----- PERMANENT EMPLOYEE ----- */
+Route::get('pe-dashboard', [PEDashboardController::class, 'displayPEDashboard'])->name('viewPEDashboard');
+
+Route::get('pe-appraisals-overview', [PEAppraisalsController::class, 'displayPEAppraisalsOverview'])->name('viewPEAppraisalsOverview');
+
+Route::get('pe-internal-customers-overview', [PEInternalCustomerController::class, 'displayICOverview'])->name('viewICOverview');
