@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Accounts extends Model
 {
@@ -30,10 +31,11 @@ class Accounts extends Model
     protected $attributes = [
         'password_changed' => 'false',
         'first_login' => 'true',
-        'status' => 'activate'
+        'status' => 'active'
     ];
 
-    public function employee(): BelongsTo{
-        return $this->belongsTo(Employees::class, 'account_id');
+    public function employee(): HasOne{
+        return $this->HasOne(Employees::class, 'account_id');
     }
+
 }

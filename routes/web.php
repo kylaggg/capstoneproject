@@ -54,6 +54,10 @@ Route::get('/admin-appraisals-overview', [AdminAppraisalsOverviewController::cla
 
 // Employee User Table
 Route::get('/employees', [EmployeeController::class,'displayEmployeeTable'])->name('viewEmployeeTable');
+Route::get('/employees-data', [EmployeeController::class, 'getData'])->name('employees.getData');
+Route::post('/employees/update-status', [EmployeeController::class, 'updateStatus'])->name('employees.updateStatus');
+Route::post('/employees/add-new-employee', [EmployeeController::class, 'addEmployee'])->name('add-new-employee');
+
 
 // Evaluation Year
 Route::get('/evaluation-year', [EvaluationYearController::class,'displayEvaluationYear'])->name('viewEvaluationYear');
@@ -64,12 +68,14 @@ Route::get('/editable-appraisal-form', [EditableAppraisalFormController::class, 
 // Editable Internal Customer Form
 Route::get('/editable-internal-customer-form', [EditableInternalCustomerFormController::class, 'displayEditableInternalCustomerForm'])->name('viewEditableInternalCustomerForm');
 
+
 /* ----- IMMEDIATE SUPERIOR ----- */
 // Appraisals Overview
 Route::get('/is-appraisals-overview', [ISAppraisalsOverviewController::class, 'displayISAppraisalsOverview'])->name('viewISAppraisalsOverview');
 
 // Settings
 Route::get('/settings', [SettingsController::class, 'displaySettings'])->name('viewSettings');
+
 
 /* ----- PERMANENT EMPLOYEE ----- */
 // Dashboard
