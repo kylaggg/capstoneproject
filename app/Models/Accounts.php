@@ -4,21 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Accounts extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'account_id';
     protected $table = 'accounts';
+
+    protected $primaryKey = 'account_id';
     public $timestamps = false;
 
     protected $fillable = [
-        'email', 'employee_number', 'default_password', 'password', 'password_changed', 'type', 'verification_code', 'first_login', 'status'
+        'email', 'default_password', 'password', 'password_changed', 'type', 'verification_code', 'first_login', 'status'
     ];
 
     protected $unique = [
-        'email', 'employee_number'
+        'email'
     ];
 
     protected $nullable = [
@@ -30,4 +32,8 @@ class Accounts extends Model
         'first_login' => 'true',
         'status' => 'activate'
     ];
+
+    public function employee(): BelongsTo{
+        return $this->belongsTo(Employees::class, 'account_id');
+    }
 }

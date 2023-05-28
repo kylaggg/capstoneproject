@@ -14,7 +14,7 @@
                 <i class='bx bx-search'></i>
             </button>
         </div>
-        <table class="table">
+        <table class="table" id="employee_table">
             <thead>
                 <tr>
                     <th scope="col" class="large-column">Employee # | Email</th>
@@ -23,11 +23,30 @@
                     <th scope="col" class="large-column">Default Password</th>
                     <th scope="col" class="small-column">Type</th>
                     <th scope="col" class="large-column">Department</th>
+                    <th scope="col" class="small-column">Status</th>
                     <th scope="col" class="medium-column">Action</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Data -->
+                @foreach ($accounts as $account)
+                    <tr id={{ $account->account_id }}>
+                        <td>{{ $account->email }}</td>
+                        <td>{{ $account->employee->first_name }}</td>
+                        <td>{{ $account->employee->last_name }}</td>
+                        <td>{{ $account->default_password }}</td>
+                        <td>{{ $account->type }}</td>
+                        <td>{{ $account->employee->department_id }}</td>
+                        <td>{{ $account->status }}</td>
+                        <td>
+                            @if ($account->status == 'active')
+                                <button type="button" class="btn btn-outline-danger">Deactivate</button>
+                            @else
+                                <button type="button" class="btn btn-outline-danger">Activate</button>
+                            @endif
+                        </td>
+
+                    </tr>
+                @endforeach
             </tbody>
         </table>
         <div class='d-flex justify-content-end gap-3 mt-2'>
@@ -53,24 +72,24 @@
                     <div class="modal-body">
                         <div class="mb-2">
                             <label>Adamson Email:</label>
-                            <input type="email" class="form-control" value="{{old('email')}}">        
+                            <input type="email" class="form-control" value="{{ old('email') }}">
                         </div>
                         <div class="mb-2">
                             <label>Employee Number:</label>
-                             <input type="number" class="form-control" value="{{old('employee_number')}}">
+                            <input type="number" class="form-control" value="{{ old('employee_number') }}">
                         </div>
                         <div class="mb-2">
                             <label>First Name:</label>
-                            <input type="text" class="form-control" value="{{old('first_name')}}">
+                            <input type="text" class="form-control" value="{{ old('first_name') }}">
                         </div>
                         <div class="mb-2">
                             <label>Last Name:</label>
-                            <input type="text" class="form-control" value="{{old('last_name')}}">
+                            <input type="text" class="form-control" value="{{ old('last_name') }}">
                         </div>
                         <div class="mb-2">
                             <label>Type (User Level):</label>
                             <select class="form-control">
-                                <option value="" selected> 
+                                <option value="" selected>
                                     Select Type</option>
                             </select>
                         </div>
