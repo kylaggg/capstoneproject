@@ -58,20 +58,31 @@ Route::get('/employees-data', [EmployeeController::class, 'getData'])->name('emp
 Route::post('/employees/update-status', [EmployeeController::class, 'updateStatus'])->name('employees.updateStatus');
 Route::post('/employees/add-new-employee', [EmployeeController::class, 'addEmployee'])->name('add-new-employee');
 
-
 // Evaluation Year
-Route::get('/evaluation-year', [EvaluationYearController::class,'displayEvaluationYear'])->name('viewEvaluationYear');
+Route::get('/evaluation-year', [EvaluationYearController::class,'viewEvaluationYears'])->name('viewEvaluationYears');
+Route::get('/evaluation-year/displayEvaluationYear', [EvaluationYearController::class,'displayEvaluationYear'])->name('displayEvaluationYear');
+Route::get('/evaluation-year/add-new-eval-year', [EvaluationYearController::class,'addEvalYear'])->name('add-new-eval-year');
 
 // Editable Appraisal Form
 Route::get('/editable-appraisal-form', [EditableAppraisalFormController::class, 'displayEditableAppraisalForm'])->name('viewEditableAppraisalForm');
+Route::get('/editable-appraisal-form/getAppraisalQuestions', [EditableAppraisalFormController::class, 'getAppraisalQuestions'])->name('getAppraisalQuestions');
+Route::post('/editable-appraisal-form/updateAppraisalQuestions/{questionId}', [EditableAppraisalFormController::class, 'updateAppraisalQuestions'])->name('updateAppraisalQuestions');
+Route::post('/editable-appraisal-form/deleteAppraisalQuestions/{questionId}', [EditableAppraisalFormController::class, 'deleteAppraisalQuestions'])->name('deleteAppraisalQuestions');
+Route::post('/editable-appraisal-form/addAppraisalQuestions', [EditableAppraisalFormController::class, 'addAppraisalQuestions'])->name('addAppraisalQuestions');
 
 // Editable Internal Customer Form
 Route::get('/editable-internal-customer-form', [EditableInternalCustomerFormController::class, 'displayEditableInternalCustomerForm'])->name('viewEditableInternalCustomerForm');
-
+Route::get('/editable-internal-customer-form/getICQuestions', [EditableInternalCustomerFormController::class, 'getICQuestions'])->name('getICQuestions');
+Route::post('/editable-internal-customer-form/updateICQuestions/{questionId}', [EditableInternalCustomerFormController::class, 'updateICQuestions'])->name('updateICQuestions');
+Route::post('/editable-internal-customer-form/deleteICQuestions/{questionId}', [EditableInternalCustomerFormController::class, 'deleteICQuestions'])->name('deleteICQuestions');
+Route::post('/editable-internal-customer-form/addICQuestions', [EditableInternalCustomerFormController::class, 'addICQuestions'])->name('addICQuestions');
 
 /* ----- IMMEDIATE SUPERIOR ----- */
 // Appraisals Overview
 Route::get('/is-appraisals-overview', [ISAppraisalsOverviewController::class, 'displayISAppraisalsOverview'])->name('viewISAppraisalsOverview');
+Route::get('/is-appraisals-overview/get-data', [ISAppraisalsOverviewController::class, 'getData'])->name('getISData');
+Route::get('/is-appraisals-overview/get-employees', [ISAppraisalsOverviewController::class, 'getEmployees'])->name('getEmployeesData');
+Route::get('/is-appraisal', [ISAppraisalsOverviewController::class, 'displayAppraisal'])->name('is.viewAppraisal');
 
 // Settings
 Route::get('/settings', [SettingsController::class, 'displaySettings'])->name('viewSettings');
@@ -84,7 +95,11 @@ Route::get('/pe-dashboard', [PEDashboardController::class, 'displayPEDashboard']
 // Appraisals Overview
 Route::get('/pe-appraisals-overview', [PEAppraisalsController::class, 'displayPEAppraisalsOverview'])->name('viewPEAppraisalsOverview');
 Route::get('/self-evaluation', [SelfEvaluationController::class, 'displaySelfEvaluationForm'])->name('viewSelfEvaluationForm');
+Route::get('/self-evaluation/get-appraisal-questions', [SelfEvaluationController::class, 'getQuestions'])->name('pe.getAppraisalQuestions');
 
 // Internal Customers
 Route::get('/pe-internal-customers-overview', [PEInternalCustomerController::class, 'displayICOverview'])->name('viewICOverview');
+Route::get('/pe-internal-customers-overview/getICAssign', [PEInternalCustomerController::class, 'getICAssign'])->name('getICAssign');
+Route::get('/pe-internal-customers-overview/getICQuestions', [PEInternalCustomerController::class, 'getICQuestions'])->name('getICQuestions');
+Route::get('/pe-internal-customers-overview/appraisalForm', [PEInternalCustomerController::class, 'showAppraisalForm'])->name('appraisalForm');
 

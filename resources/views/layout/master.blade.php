@@ -31,134 +31,135 @@
         <ul class="nav-links">
             <!-- Admin Links -->
             @if (session()->get('user_level') === 'AD')
-                <li>
-                    <a href="{{ route('viewAdminDashboard') }}">
-                        <i class='bx bx-grid-alt'></i>
-                        <span class="link_name">Dashboard</span>
+            <li>
+                <a href="{{ route('viewAdminDashboard') }}">
+                    <i class='bx bx-grid-alt'></i>
+                    <span class="link_name">Dashboard</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="{{ route('viewAdminDashboard') }}">Dashboard</a></li>
+                </ul>
+            </li>
+            <li id="appraisalsNav">
+                <a href="{{ route('viewAdminAppraisalsOverview') }}">
+                    <i class='bx bx-file'></i>
+                    <span class="link_name">Appraisal Overview</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="{{ route('viewAdminAppraisalsOverview') }}">Appraisal Overview</a>
+                    </li>
+                </ul>
+            </li>
+            <li id='employeesNav'>
+                <a href="{{ route('viewEmployeeTable') }}">
+                    <i class='bx bx-user-plus'></i>
+                    <span class="link_name">Employees</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="{{ route('viewEmployeeTable') }}">Employees</a>
+                    </li>
+                </ul>
+            </li>
+            <li id='evalYearNav'>
+                <a href="{{ route('viewEvaluationYears') }}">
+                    <i class='bx bx-box'></i>
+                    <span class="link_name">Evaluation<br>Year</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="{{ route('viewEvaluationYears') }}">Evaluation Year</li>
+                </ul>
+            </li>
+            <li id='editableFormsNav'>
+                <div class="iocn-link">
+                    <a href="#">
+                        <i class='bx bx-book-alt'></i>
+                        <span class="link_name">Editable Forms</span>
                     </a>
-                    <ul class="sub-menu blank">
-                        <li><a class="link_name" href="{{ route('viewAdminDashboard') }}">Dashboard</a></li>
-                    </ul>
-                </li>
-                <li id="appraisalsNav">
-                    <a href="{{ route('viewAdminAppraisalsOverview') }}">
-                        <i class='bx bx-file'></i>
-                        <span class="link_name">Appraisal Overview</span>
-                    </a>
-                    <ul class="sub-menu blank">
-                        <li><a class="link_name" href="{{ route('viewAdminAppraisalsOverview') }}">Appraisal Overview</a></li>
-                    </ul>
-                </li>
-                <li id='employeesNav'>
-                    <a href="{{ route('viewEmployeeTable') }}">
-                        <i class='bx bx-user-plus'></i>
-                        <span class="link_name">Employees</span>
-                    </a>
-                    <ul class="sub-menu blank">
-                        <li><a class="link_name" href="{{ route('viewEmployeeTable') }}">Employees</a>
-                        </li>
-                    </ul>
-                </li>
-                <li id='evalYearNav'>
-                    <a href="{{ route('viewEvaluationYear') }}">
-                        <i class='bx bx-box'></i>
-                        <span class="link_name">Evaluation<br>Year</span>
-                    </a>
-                    <ul class="sub-menu blank">
-                        <li><a class="link_name" href="{{ route('viewEvaluationYear') }}">Evaluation Year</li>
-                    </ul>
-                </li>
-                <li id='editableFormsNav'>
-                    <div class="iocn-link">
-                        <a href="#">
-                            <i class='bx bx-book-alt'></i>
-                            <span class="link_name">Editable Forms</span>
-                        </a>
-                        <i class='bx bxs-chevron-down arrow'></i>
-                    </div>
-                    <ul class="sub-menu">
-                        <li><a href="{{ route('viewEditableAppraisalForm') }}">Appraisal Form</a></li>
-                        <li><a href="{{ route('viewEditableInternalCustomerForm') }}">Internal
-                                Customer<br>Form</a></li>
-                    </ul>
-                </li>
+                    <i class='bx bxs-chevron-down arrow'></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a href="{{ route('viewEditableAppraisalForm') }}">Appraisal Form</a></li>
+                    <li><a href="{{ route('viewEditableInternalCustomerForm') }}">Internal
+                            Customer<br>Form</a></li>
+                </ul>
+            </li>
             @endif
 
             <!-- Immediate Superior Links -->
             @if (session()->get('user_level') === 'IS')
-                <li>
-                    <a href="{{ route('viewISDashboard') }}">
-                        <i class='bx bx-grid-alt'></i>
-                        <span class="link_name">Dashboard</span>
-                    </a>
-                    <ul class="sub-menu blank">
-                        <li><a class="link_name" href="{{ route('viewISDashboard') }}">Dashboard</a></li>
-                    </ul>
-                </li>
-                <li id="appraisalsNav">
-                    <a href="{{ route('viewISAppraisalsOverview') }}">
-                        <i class='bx bx-file'></i>
-                        <span class="link_name">Appraisals</span>
-                    </a>
-                    <ul class="sub-menu blank">
-                        <li><a class="link_name" href="{{ route('viewISAppraisalsOverview') }}">Appraisals</a>
-                        </li>
-                    </ul>
-                </li>
+            <li>
+                <a href="{{ route('viewISDashboard') }}">
+                    <i class='bx bx-grid-alt'></i>
+                    <span class="link_name">Dashboard</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="{{ route('viewISDashboard') }}">Dashboard</a></li>
+                </ul>
+            </li>
+            <li id="appraisalsNav">
+                <a href="{{ route('viewISAppraisalsOverview') }}">
+                    <i class='bx bx-file'></i>
+                    <span class="link_name">Appraisals</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="{{ route('viewISAppraisalsOverview') }}">Appraisals</a>
+                    </li>
+                </ul>
+            </li>
             @endif
 
             <!-- Permanent Employee Links-->
             @if (session()->get('user_level') === 'PE')
-                <li>
-                    <a href="{{ route('viewPEDashboard') }}">
-                        <i class='bx bx-grid-alt'></i>
-                        <span class="link_name">Dashboard</span>
-                    </a>
-                    <ul class="sub-menu blank">
-                        <li><a class="link_name" href="viewPEDashboard">Dashboard</a></li>
-                    </ul>
-                </li>
-                <li id="appraisalsNav">
-                    <a href="{{ route('viewPEAppraisalsOverview') }}">
-                        <i class='bx bx-file'></i>
-                        <span class="link_name">Appraisal</span>
-                    </a>
-                    <ul class="sub-menu blank">
-                        <li><a class="link_name" href="{{ route('viewPEAppraisalsOverview')}}">Appraisal</a>
-                        </li>
-                    </ul>
-                </li>
-                <li id='internalCustomersNav'>
-                    <a href="{{route('viewICOverview')}}">
-                        <i class='bx bx-group'></i>
-                        <span class="link_name">Internal Customer<br>Appraisal</span>
-                    </a>
-                    <ul class="sub-menu blank">
-                        <li><a class="link_name" href="{{route('viewICOverview')}}">Internal Customer Appraisal</a></li>
-                    </ul>
-                </li>
+            <li>
+                <a href="{{ route('viewPEDashboard') }}">
+                    <i class='bx bx-grid-alt'></i>
+                    <span class="link_name">Dashboard</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="viewPEDashboard">Dashboard</a></li>
+                </ul>
+            </li>
+            <li id="appraisalsNav">
+                <a href="{{ route('viewPEAppraisalsOverview') }}">
+                    <i class='bx bx-file'></i>
+                    <span class="link_name">Appraisal</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="{{ route('viewPEAppraisalsOverview')}}">Appraisal</a>
+                    </li>
+                </ul>
+            </li>
+            <li id='internalCustomersNav'>
+                <a href="{{route('viewICOverview')}}">
+                    <i class='bx bx-group'></i>
+                    <span class="link_name">Internal Customer<br>Appraisal</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="{{route('viewICOverview')}}">Internal Customer Appraisal</a></li>
+                </ul>
+            </li>
             @endif
 
             <!-- Contractual Employee Link -->
             @if (session()->get('user_level') === 'CE')
-                <li>
-                    <a href="{{ route('viewCEDashboard') }}">
-                        <i class='bx bx-grid-alt'></i>
-                        <span class="link_name">Dashboard</span>
-                    </a>
-                    <ul class="sub-menu blank">
-                        <li><a class="link_name" href="">Dashboard</a></li>
-                    </ul>
-                </li>
-                <li id='internalCustomersNav'>
-                    <a href="">
-                        <i class='bx bx-group'></i>
-                        <span class="link_name">Internal Customer<br>Appraisal</span>
-                    </a>
-                    <ul class="sub-menu blank">
-                        <li><a class="link_name" href="">Internal Customer Appraisal</a></li>
-                    </ul>
-                </li>
+            <li>
+                <a href="{{ route('viewCEDashboard') }}">
+                    <i class='bx bx-grid-alt'></i>
+                    <span class="link_name">Dashboard</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="">Dashboard</a></li>
+                </ul>
+            </li>
+            <li id='internalCustomersNav'>
+                <a href="">
+                    <i class='bx bx-group'></i>
+                    <span class="link_name">Internal Customer<br>Appraisal</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="">Internal Customer Appraisal</a></li>
+                </ul>
+            </li>
             @endif
 
             <li>
@@ -188,7 +189,7 @@
                         </div>
                     </div>
                     <button type="button" class="btn btn-link" data-bs-toggle="modal"
-                        data-bs-target="#logout-confirmation">
+                        data-bs-target="#logout-confirmation-modal">
                         <i class='bx bx-log-out'></i>
                     </button>
                 </div>
@@ -210,11 +211,11 @@
     </section>
 
     <!-- Modal -->
-    <div class="modal fade " id="logout-confirmation">
+    <div class="modal fade" id="logout-confirmation-modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Logout Confirmation</h1>
+                    <h1 class="modal-title fs-5" id="logout-confirmation-label">Logout Confirmation</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -229,7 +230,11 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+    </script>
 </body>
+<script>
+
+</script>
 
 </html>

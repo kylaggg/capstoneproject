@@ -7,6 +7,7 @@ use App\Models\Accounts;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\VerificationCode;
+use App\Models\Employees;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\JsonResponse;
 
@@ -63,6 +64,10 @@ class AuthController extends Controller
                     $request->session()->put('email', $request->email);
                     $request->session()->put('user_level', $accounts->type);
 
+                    $account_id = session()->get('account_id');
+                    $employee = Employees::where('account_id', $account_id)->first();
+                    $full_name = $employee->first_name . ' ' . $employee->last_name;
+                    session()->put('full_name', $full_name);
 
                     if ($accounts->type == 'AD') { // For Demo Purposes only
                         session()->put('full_name', 'Administrator'); // wala pang account

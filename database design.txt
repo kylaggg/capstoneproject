@@ -1,0 +1,93 @@
+accounts (Model: Accounts)
+account_id (pk)
+email (unique)
+default_password (null)
+password (null)
+password_changed (default: false)
+type (AD, IS, PE, CE)
+verification_code (null)
+status (default: active) or deactivated
+
+employees (Model: Employees)
+employee_id (pk)
+account_id (fk to accounts table) HasOne
+employee_number (unique)
+first_name
+last_name
+department_id (fk to departments) (null)
+job_title (null)
+position (null)
+immediate_superior_id (fk to employee_id ng employees table) (null)
+
+departments (Model: Departments)
+department_id (pk)
+department_name (unique)
+
+evaluation_years (Model: EvaluationYears)
+evaluation_year_id (pk)
+evaluation_year_name (format is '2023_2024') <- eto magdedetermine kung anong table ichecheck
+sy_start (date)
+sy_end (date)
+kra_encoding_start (date)
+kra_encoding_end (date)
+performance_review_start (date)
+performance_review_end (date)
+evaluation_start (date)
+evaluation_end (date)
+status ('active', 'finished' ???)
+
+appraisals_2023_2024 (Model: Appraisals)
+appraisal_id (pk)
+evaluation_type ('internal customer' or 'self evaluation' or 'is evaluation')
+employee_id (fk to employees table)
+evaluator_id (fk to employees table)
+date_submitted (date)
+status ('complete', 'pending')
+signature (path to)
+
+form_questions_2023_2024 (Model: FormQuestions)
+question_id (pk)
+form_type ('appraisal' or 'internal customer')
+table (ung mga initials ng table kunyare 'sid' for sustained integral chuchu')
+question
+question_order
+
+appraisal_answers_2023_2024 (Model: AppraisalAnswers)
+appraisal_answer_id (pk)
+appraisal_id (fk to appraisals table) (null)
+kra_id (fk to kras table) (null)
+question_id (fk to form_questions table) (null)
+score
+
+kras_2023_2024 (Model: KRAs)
+kra_id (pk)
+appraisal_id (fk to appraisals)
+kra (null)
+kra_weight (null)
+objective (null)
+performance_indicator (null)
+actual_result (null)
+weighted_total (null)
+kra_order
+
+learning_development_plans_2023_2024 (Model:LearningDevelopmentPlans)
+development_plan_id (pk)
+appraisal_id (fk to appraisals table) (mga evaluation type:'self evaluation' or 'is evaluation' lang pede)
+learning_need
+methodology
+methodology
+development_plan_order
+
+work_performance_plans_2023_2024 (Model:WorkPerformancePlans)
+performance_plan_id (pk)
+appraisal_id (fk to appraisals table) (mga evaluation type:'self evaluation' or 'is evaluation' lang pede)
+continue_doing
+stop_doing
+start_doing
+performance_plan_order
+
+comments_2023_2024 (Model: Comments)
+comment_id (pk)
+appraisal_id (fk to appraisals table) (mga evaluation type: 'internal customer' lang pede)
+customer_service
+suggestion

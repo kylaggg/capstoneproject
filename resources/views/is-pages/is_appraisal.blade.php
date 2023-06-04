@@ -1,7 +1,7 @@
 @extends('layout.master')
 
 @section('title')
-<h1>Self-Evaluation Form</h1>
+<h1>Appraisal Form</h1>
 @endsection
 
 @section('content')
@@ -314,16 +314,17 @@
         </tbody>
     </table>
 
-    <table class='table table-bordered'>
+    <table class='table table-bordered' id="kra_table">
         <thead>
             <tr>
                 <th class='large-column'>KRA</th>
-                <th class='small-column'>Weight</th>
+                <th class='xxs-column'>Weight</th>
                 <th class='large-column'>Objectives</th>
                 <th class='large-column'>Performance Indicators</th>
                 <th class='large-column'>Actual Results</th>
-                <th>Performance Level</th>
+                <th class='medium-column'>Performance Level</th>
                 <th class="xxs-column">Weighted Total</th>
+                <th class="xxs-column">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -351,37 +352,38 @@
                     <div class="d-flex justify-content-center gap-2">
                         <div class="col-auto">
                             <label class="form-check-label">
-                                <input type="radio" name="kra1_1" class="form-check-input" value="5">
+                                <input type="radio" name="kra1" class="form-check-input" value="5">
                                 5
                             </label>
                         </div>
                         <div class="col-auto">
                             <label class="form-check-label">
-                                <input type="radio" name="kra1_1" class="form-check-input" value="4">
+                                <input type="radio" name="kra1" class="form-check-input" value="4">
                                 4
                             </label>
                         </div>
                         <div class="col-auto">
                             <label class="form-check-label">
-                                <input type="radio" name="kra1_1" class="form-check-input" value="3">
+                                <input type="radio" name="kra1" class="form-check-input" value="3">
                                 3
                             </label>
                         </div>
                         <div class="col-auto">
                             <label class="form-check-label">
-                                <input type="radio" name="kra1_1" class="form-check-input" value="2">
+                                <input type="radio" name="kra1" class="form-check-input" value="2">
                                 2
                             </label>
                         </div>
                         <div class="col-auto">
                             <label class="form-check-label">
-                                <input type="radio" name="kra1_1" class="form-check-input" value="1">
+                                <input type="radio" name="kra1" class="form-check-input" value="1">
                                 1
                             </label>
                         </div>
                     </div>
                 </td>
                 <td></td>
+                <td class='td-action'></td>
             </tr>
         </tbody>
         <tfoot>
@@ -401,9 +403,13 @@
                         <input class="small-column form-control total-weighted text-center" type="text" readonly>
                     </div>
                 </td>
+                <td></td>
             </tr>
         </tfoot>
     </table>
+    <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-primary" id="add-kra-btn">Add Row</button>
+    </div>
 </div>
 <div class="content-container">
     <h2>III. Future Performance Agenda</h2>
@@ -585,8 +591,23 @@
             clonedRow.appendTo('#ldp_table tbody');
         });
 
-        $(document).on('click', '.delete-btn', function() {
-            $(this).closest('tr').remove();
+        $('#add-kra-btn').click(function(){
+            var lastRow = $('#kra_table tbody tr:last-child');
+            var clonedRow = lastRow.clone();
+
+            var rowCount = $('#kra_table tbody tr').length;
+
+            clonedRow.find('textarea').val('');
+            clonedRow.find('.td-action').html('<button class="btn btn-danger delete-btn align-middle">Delete</button>');
+            clonedRow.find('[name^="kra"]').each(function() {
+                var nameAttr = $(this).attr('name');
+                var newNameAttr = nameAttr.replace(/\d+/, rowCount + 1);
+                $(this).attr('name', newNameAttr);
+            });
+            clonedRow.find(':radio').prop('checked', false); // Clear radio button selection
+
+            clonedRow.appendTo('#kra_table tbody');
+            updateRadioButtonNames();
         });
 
         $(document).on('change', '#SID_table input[type="radio"]', function() {
@@ -602,7 +623,27 @@
         });
 
         loadTableData();
+
+        $(document).on('click', '.delete-btn', function() {
+            var row = $(this).closest('tr');
+            row.remove();
+
+            updateRadioButtonNames();
+        });
     });
+
+    function updateRadioButtonNames() {
+        $('#kra_table tbody tr').each(function(index) {
+            var row = $(this);
+            var newRowNumber = index + 1;
+
+            row.find('[name^="kra"]').each(function() {
+                var nameAttr = $(this).attr('name');
+                var newNameAttr = nameAttr.replace(/\d+/, newRowNumber);
+                $(this).attr('name', newNameAttr);
+            });
+        });
+    }
 
     function loadTableData() {
         var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');

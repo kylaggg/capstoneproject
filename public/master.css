@@ -301,7 +301,7 @@ text, .text-blue {
 }
 
 .xxs-column {
-    width: 25px !important;
+    width: 35px !important;
 }
 .extra-small-column{
     width: 50px !important; 
@@ -423,4 +423,10 @@ textarea {
     border: solid #0b2a51 1px !important;
     color: white !important;
     background-color: #0b2a51 !important;
+}
+
+.hover-blue:hover {
+    background: #f5f6fa;
+    outline: none;
+    cursor: pointer;
 }

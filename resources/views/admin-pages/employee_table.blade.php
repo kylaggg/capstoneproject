@@ -151,53 +151,54 @@
 
 
     function loadTableData() {
-    $.ajax({
-        url: '{{ route('employees.getData') }}',
-        type: 'GET',
-        headers: {
-            'X-CSRF-TOKEN': csrfToken
-        },
-        success: function(response) {
-            if (response.success) {
-                $('#employee_table_body').empty();
+        $.ajax({
+            url: '{{ route('employees.getData') }}',
+            type: 'GET',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken
+            },
+            success: function(response) {
+                if (response.success) {
+                    $('#employee_table_body').empty();
 
-                var accounts = response.accounts;
-                for (var i = 0; i < accounts.length; i++) {
-                    var account = accounts[i];
-                    var statusButton = account.status === 'active' ? 'Deactivate' : 'Activate';
-                    var statusAction = account.status === 'active' ? 'deactivate' : 'activate';
+                    var accounts = response.accounts;
+                    for (var i = 0; i < accounts.length; i++) {
+                        var account = accounts[i];
+                        var statusButton = account.status === 'active' ? 'Deactivate' : 'Activate';
+                        var statusAction = account.status === 'active' ? 'deactivate' : 'activate';
 
-                    var newRow = $('<tr>').attr('id', account.account_id).append(
-                        $('<td>').text(account.email),
-                        $('<td>').text(account.employee.first_name),
-                        $('<td>').text(account.employee.last_name),
-                        $('<td>').append(
-                            $('<div>').addClass('input-group').attr('id', 'passwordContainer-' + account.account_id).append(
-                                $('<input>').attr('type', 'password').addClass('form-control').val(account.default_password),
-                                $('<button>').addClass('btn btn-outline-secondary').attr('type', 'button').attr('id', 'togglePasswordButton-' + account.account_id).attr('onclick', 'togglePasswordVisibility(' + account.account_id + ')').append(
-                                    $('<i>').addClass('bx bx-show').attr('id', 'password-toggle-icon-' + account.account_id)
+                        var newRow = $('<tr>').attr('id', account.account_id).append(
+                            $('<td>').text(account.email),
+                            $('<td>').text(account.employee.first_name),
+                            $('<td>').text(account.employee.last_name),
+                            $('<td>').append(
+                                $('<div>').addClass('input-group').attr('id', 'passwordContainer-' + account.account_id).append(
+                                    $('<input>').attr('type', 'password').addClass('form-control').val(account.default_password),
+                                    $('<button>').addClass('btn btn-outline-secondary').attr('type', 'button').attr('id', 'togglePasswordButton-' + account.account_id).attr('onclick', 'togglePasswordVisibility(' + account.account_id + ')').append(
+                                        $('<i>').addClass('bx bx-show').attr('id', 'password-toggle-icon-' + account.account_id)
+                                    ),
+                                    $('<button>').addClass('btn btn-outline-secondary').attr('type', 'button').html('<i class="bx bx-reset" ></i>')
                                 )
-                            )
-                        ),
-                        $('<td>').text(account.type),
-                            $('<td>').text(account.employee.department ? account.employee.department.department_name : ''),
+                            ),
+                            $('<td>').text(account.type),
+                                $('<td>').text(account.employee.department ? account.employee.department.department_name : ''),
 
-                        $('<td>').text(account.status),
-                        $('<td>').append(
-                            $('<button>').addClass('btn btn-outline-danger').text(statusButton).attr('onclick', 'changeStatus(' + account.account_id + ', "' + statusAction + '")')
-                        )
-                    );
-                    $('#employee_table_body').append(newRow);
+                            $('<td>').text(account.status),
+                            $('<td>').append(
+                                $('<button>').addClass('btn btn-outline-danger').text(statusButton).attr('onclick', 'changeStatus(' + account.account_id + ', "' + statusAction + '")')
+                            )
+                        );
+                        $('#employee_table_body').append(newRow);
+                    }
+                } else {
+                    console.log(response.error);
                 }
-            } else {
-                console.log(response.error);
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
             }
-        },
-        error: function(xhr, status, error) {
-            console.log(error);
-        }
-    });
-}
+        });
+    }
 
     function togglePasswordVisibility(accountId) {
         var passwordInput = $('#passwordContainer-' + accountId).find('input');
@@ -213,35 +214,32 @@
     }
 
     function changeStatus(accountId, action) {
-    $.ajax({
-        url: '/employees/update-status',
-        type: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': csrfToken
-        },
-        data: {
-            account_id: accountId,
-            action: action
-        },
-        success: function(response) {
-            if (response.success) {
-                if (action === 'activate') {
-                    $('#employee_table tr#' + accountId + ' button.btn-outline-danger').text('Deactivate');
-                } else if (action === 'deactivate') {
-                    $('#employee_table tr#' + accountId + ' button.btn-outline-danger').text('Activate');
+        $.ajax({
+            url: '/employees/update-status',
+            type: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken
+            },
+            data: {
+                account_id: accountId,
+                action: action
+            },
+            success: function(response) {
+                if (response.success) {
+                    if (action === 'activate') {
+                        $('#employee_table tr#' + accountId + ' button.btn-outline-danger').text('Deactivate');
+                    } else if (action === 'deactivate') {
+                        $('#employee_table tr#' + accountId + ' button.btn-outline-danger').text('Activate');
+                    }
+                    loadTableData();
+                } else {
+                    console.log(response.error);
                 }
-                loadTableData();
-            } else {
-                console.log(response.error);
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
             }
-        },
-        error: function(xhr, status, error) {
-            console.log(error);
-        }
-    });
-}
-
-
-
+        });
+    }
 </script>
 @endsection
