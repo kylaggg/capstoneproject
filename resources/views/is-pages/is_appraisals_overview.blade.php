@@ -47,20 +47,26 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <table class='table table-bordered'>
+                <div class="input-group mb-3 search-box">
+                    <input type="text" class="form-control" placeholder="Search">
+                    <button class="btn btn-outline-secondary" type="button">
+                        <i class='bx bx-search'></i>
+                    </button>
+                </div>
+                <table class='table table-bordered' id="chooseModalTable1">
                     <thead>
                         <tr>
                             <th>Employee</th>
                             <th>Department</th>
                         </tr>
                     </thead>
-                    <tbody id="employee_table_body">
+                    <tbody id="employee_table_body" class="text-justify">
 
                     </tbody>
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-primary">Submit</button>
             </div>
         </div>
     </div>
@@ -136,7 +142,6 @@
                             $('<td>').text('Pending')
                         );
 
-                        // Append the button for the last column to the current row
                         newRow.append($('<td>').append(
                             $('<div>').append(
                                 $('<a>').addClass('btn btn-outline-primary').attr('href', '{{ route("is.viewAppraisal") }}').text('Appraise')
@@ -155,36 +160,90 @@
         });
     }
 
+    function toggleRowCheckbox(rowId) {
+    $('#' + rowId).toggleClass('selected');
+    }
+
+    function saveSelection() {
+        var selectedRows = [];
+        $('.selected').each(function() {
+            selectedRows.push($(this).attr('id'));
+        });
+    }
+
+    var selectedRows = [];
+
     function loadEmployeeData() {
     $.ajax({
         url: '{{ route('getEmployeesData') }}',
         type: 'GET',
         headers: {
-            'X-CSRF-TOKEN': csrfToken
+        'X-CSRF-TOKEN': csrfToken
         },
         success: function(response) {
-            if (response.success) {
-                $('#employee_table_body').empty();
+        if (response.success) {
+            $('#employee_table_body').empty();
 
-                var employees = response.employees;
-                for (var i = 0; i < employees.length; i++) {
-                    var employee = employees[i];
+            var employees = response.employees;
+            for (var i = 0; i < employees.length; i++) {
+            var employee = employees[i];
 
-                    var newRow = $('<tr>').attr('id', employee.employee_id).addClass('hover-blue').append(
-                        $('<td>').text(employee.first_name + ' ' + employee.last_name).addClass('medium-column'),
-                        $('<td>').text(employee.department_name)
-                    );
-                    $('#employee_table_body').append(newRow);
+            var newRow = $('<tr>').addClass('row-checkbox').append(
+                $('<div>').attr('id','checkboxes').append(
+                $('<input>').attr('type', 'checkbox').attr('name', 'ic').attr('value', employee.employee_id),
+                $('<label>').addClass('chooseIC text-justify').attr('for', employee.employee_id).append(
+                    $('<td>').text(employee.first_name + ' ' + employee.last_name),
+                ),
+                ),
+                $('<td>').text(employee.department_name)
+            );
+
+            newRow.on('click', function() {
+                var checkbox = $(this).find('input[type="checkbox"]');
+                var isChecked = checkbox.prop('checked');
+                var checkedCount = $('input[type="checkbox"]:checked').length;
+
+                if (isChecked || checkedCount < 2) {
+                checkbox.prop('checked', !isChecked);
+                $(this).toggleClass('row-selected', !isChecked);
+                updateSelectedRows();
                 }
-            } else {
-                console.log(response.error);
+            });
+
+            $('#employee_table_body').append(newRow);
             }
+        } else {
+            console.log(response.error);
+        }
         },
         error: function(xhr, status, error) {
-            console.log(error);
+        console.log(error);
         }
     });
-}
+    }
+
+    function updateSelectedRows() {
+        selectedRows = [];
+        $('input[type="checkbox"]:checked').each(function() {
+            var row = $(this).closest('tr');
+            selectedRows.push(row);
+        });
+    }
+
+    $(document).on('click', '#ISModal1 .btn-primary', function() {
+        $('#employee_table_body').empty();
+        $('#ISModal1 .search-box').hide();
+            
+        for (var i = 0; i < selectedRows.length; i++) {
+            var row = selectedRows[i];
+            $('#employee_table_body').append(row);
+        }
+
+        $('#ISModal1 .modal-body').append(container);
+
+        selectedRows = [];
+    });
+
 
 
 </script>

@@ -430,3 +430,33 @@ textarea {
     outline: none;
     cursor: pointer;
 }
+
+/* MODALS */
+
+.row-checkbox{
+    margin: 0px;
+    padding: 0px;
+}
+.chooseIC{
+
+    width: 100%;
+    display: inline-block;
+}
+
+.chooseIC:hover{
+    cursor: pointer;
+}
+
+#checkboxes input[type=checkbox]{
+    display: none;
+}
+
+#checkboxes input[type=checkbox]:checked + .chooseIC{
+    background-color: #ACE1AF;
+}
+
+.row-selected {
+    background-color: #ACE1AF;
+    border: #ACE1AF;
+  }
+  

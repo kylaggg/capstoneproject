@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="content-container">
-    <div class="input-group mb-3 search-box">
+    <div class="input-group mb-2">
         <input type="text" class="form-control" placeholder="Search">
         <button class="btn btn-outline-secondary" type="button">
             <i class='bx bx-search'></i>
