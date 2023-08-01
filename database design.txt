@@ -91,3 +91,4 @@ comment_id (pk)
 appraisal_id (fk to appraisals table) (mga evaluation type: 'internal customer' lang pede)
 customer_service
 suggestion
+comment_order

@@ -21,6 +21,7 @@ class EvalYear extends Model
               'pr_start',
               'pr_end',
               'eval_start',
-              'eval_end'
+              'eval_end',
+              'status'
        ];
 }

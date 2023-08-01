@@ -11,12 +11,10 @@
                 <tr>
                     <th class='small-column align-middle text-center'>#</th>
                     <th class='medium-column align-middle text-center'>School Year</th>
-                    <th class='medium-column align-middle text-center'>KRA Starting Date</th>
-                    <th class='medium-column align-middle text-center'>KRA Ending Date</th>
-                    <th class='medium-column align-middle text-center'>Performace Review Starting Date</th>
-                    <th class='medium-column align-middle text-center'>Performace Review Ending Date</th>
-                    <th class='medium-column align-middle text-center'>Employee Starting Date</th>
-                    <th class='medium-column align-middle text-center'>Employee Ending Date</th>
+                    <th class='medium-column align-middle text-center'>KRA Encoding Date</th>
+                    <th class='medium-column align-middle text-center'>Performace Review Date</th>
+                    <th class='medium-column align-middle text-center'>Employee Review Date</th>
+                    <th class='small-column align middle text-center'>Status</th>
                     <th class='small-column align-middle text-center'>Action</th>
                 </tr>
             </thead>
@@ -41,7 +39,7 @@
                         @csrf
                         <div class="modal-body">
                             <p>Fill up the following information to start a new evaluation year:</p>
-
+                            <?php $currentYear = now()->format('Y'); ?>
                             <label>
                                 <h6>School Year:</h6>
                             </label>
@@ -55,12 +53,15 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="col">
-                                    <input class='form-control' type='date' placeholder="School year starting date"
-                                        name="sy_start">
+                                    <select class='form-control' name="sy_start" id="sy_start" onchange="updateEndYear()">
+                                        <?php $currentYear = now()->format('Y'); ?>
+                                        @for ($year = $currentYear; $year <= 2099; $year++)
+                                            <option value="{{ $year }}">{{ $year }}</option>
+                                        @endfor
+                                    </select>
                                 </div>
                                 <div class="col">
-                                    <input class='form-control' type='date' placeholder="School year ending date"
-                                        name="sy_end">
+                                    <input class='form-control' type='number' name="sy_end" id="sy_end" readonly>
                                 </div>
                                 <span class="text-danger">
                                     @error('email')
@@ -169,6 +170,14 @@
             return date.toLocaleDateString('en-US', options);
         }
 
+        function updateEndYear() {
+            const startYear = parseInt(document.getElementById('sy_start').value);
+            const endYearInput = document.getElementById('sy_end');
+
+            const endYear = startYear + 1;
+            endYearInput.value = endYear;
+        }
+
         $(document).ready(function() {
             // Function to load and update the evaluation year table
             function loadEvaluationYearTable() {
@@ -184,21 +193,17 @@
                                 // Create table row using evalyear data
                                 var row = '<tr>' +
                                     '<td class="align-middle">' + evalyear.eval_id + '</td>' +
-                                    '<td class="align-middle">' + formatDate(evalyear
-                                        .sy_start) + ' - ' + formatDate(evalyear.sy_end) +
+                                    '<td class="align-middle">' + evalyear.sy_start + ' - ' +
+                                    evalyear.sy_end +
                                     '</td>' +
                                     '<td class="align-middle">' + formatDate(evalyear
-                                        .kra_start) + '</td>' +
-                                    '<td class="align-middle">' + formatDate(evalyear.kra_end) +
-                                    '</td>' +
+                                        .kra_start) + ' - '+ formatDate(evalyear.kra_end) + '</td>' +
                                     '<td class="align-middle">' + formatDate(evalyear
-                                        .pr_start) + '</td>' +
-                                    '<td class="align-middle">' + formatDate(evalyear.pr_end) +
-                                    '</td>' +
+                                        .pr_start) + ' - ' + formatDate(evalyear.pr_end) + '</td>' +
                                     '<td class="align-middle">' + formatDate(evalyear
-                                        .eval_start) + '</td>' +
-                                    '<td class="align-middle">' + formatDate(evalyear
+                                        .eval_start) + ' - ' + formatDate(evalyear
                                         .eval_end) + '</td>' +
+                                        '<td class="align-middle">' + evalyear.status +
                                     '<td class="align-middle">' +
                                     '<div class="btn-group" role="group" aria-label="Basic example">' +
                                     '<button type="button" class="btn btn-outline-info">Load</button>' +
@@ -218,7 +223,8 @@
                 });
             }
 
-            // Initial loading of the evaluation year table
+
+
             loadEvaluationYearTable();
         });
     </script>
