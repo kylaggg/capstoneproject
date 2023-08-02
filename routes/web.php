@@ -32,7 +32,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Auth Controller
-Route::get('/login', [AuthController::class, 'displayLogin'])->name('viewLogin');
+Route::get('/', [AuthController::class, 'displayLogin'])->name('viewLogin');
 Route::get('/two-factor-auth', [AuthController::class, 'displayTwoFactorAuth'])->name('viewTwoFactorAuth');
 Route::get('/reset-password-1', [AuthController::class, 'displayResetPassword'])->name('viewResetPassword');
 Route::get('/reset-password-2', [AuthController::class, 'displayResetPassword2'])->name('viewResetPassword2');
