@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\EvalYear;
+use App\Models\Accounts;
+use App\Models\Employees;
+use App\Models\Appraisals;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class EvaluationYearController extends Controller
@@ -34,19 +38,20 @@ class EvaluationYearController extends Controller
             'eval_start' => 'required',
             'eval_end' => 'required'
         ], [
-                'sy_start.required' => 'Please choose a date for the start of the school year.',
-                'sy_end.required' => 'Please enter an Adamson email address.',
-                'kra_start.required' => 'Please enter a valid email address.',
-                'kra_end.required' => 'Please enter an employee number.',
-                'pr_start.required' => 'Please enter a valid employee number.',
-                'pr_end.required' => 'Please enter the employee\'s first name.',
-                'eval_start.required' => 'Please enter the employee\'s last name.',
-                'eval_end.required' => 'Please choose a user level.',
-            ]);
+            'sy_start.required' => 'Please choose a date for the start of the school year.',
+            'sy_end.required' => 'Please choose a date for the end of the school year.',
+            'kra_start.required' => 'Please enter a valid email address.',
+            'kra_end.required' => 'Please enter an employee number.',
+            'pr_start.required' => 'Please enter a valid employee number.',
+            'pr_end.required' => 'Please enter the employee\'s first name.',
+            'eval_start.required' => 'Please enter the employee\'s last name.',
+            'eval_end.required' => 'Please choose a user level.',
+        ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput()->with('startNewEvalYear', true);
         } else {
+            EvalYear::where('status', 'active')->update(['status' => 'inactive']);
             $eval_year = EvalYear::create([
                 'sy_start' => $request->input('sy_start'),
                 'sy_end' => $request->input('sy_end'),
@@ -55,28 +60,29 @@ class EvaluationYearController extends Controller
                 'pr_start' => $request->input('pr_start'),
                 'pr_end' => $request->input('pr_end'),
                 'eval_start' => $request->input('eval_start'),
-                'eval_end' => $request->input('eval_end')
+                'eval_end' => $request->input('eval_end'),
+                'status' => 'active'
             ]);
 
             $sy = '_' . $request->input('sy_start') . '_' . $request->input('sy_end');
 
-            // Appraisals Table
-            Schema::connection('mysql')->create('appraisals' . $sy, function($table){
+            Schema::connection('mysql')->create('appraisals' . $sy, function ($table) {
                 $table->bigIncrements('appraisal_id');
                 $table->string('evaluation_type');
                 $table->integer('employee_id');
                 $table->integer('evaluator_id')->nullable();
                 $table->date('date_submitted')->nullable();
-                $table->string('status');
                 $table->binary('signature')->nullable();
             });
 
-            Schema::connection('mysql')->create('form_questions' . $sy, function($table){
+            Schema::connection('mysql')->create('form_questions' . $sy, function ($table) {
                 $table->bigIncrements('question_id');
                 $table->string('form_type');
-                $table->string('table');
+                $table->string('table_initials');
                 $table->text('question');
                 $table->integer('question_order');
+                $table->string('status');
+                $table->nullableTimestamps();
             });
 
             Schema::connection('mysql')->create('appraisal_answers' . $sy, function ($table) {
@@ -124,6 +130,33 @@ class EvaluationYearController extends Controller
                 $table->integer('comment_order');
             });
 
-            return redirect()->back()->with('success', 'Evaluation Year added successfully.');        }
+            $originalFormQuestionsTable = 'form_questions';
+            $newFormQuestionsTable = 'form_questions' . $sy;
+
+            DB::connection('mysql')->insert("INSERT INTO $newFormQuestionsTable (question_id, form_type, table_initials, question, question_order, status, created_at, updated_at) 
+                               SELECT question_id, form_type, table_initials, question, question_order, status, created_at, updated_at 
+                               FROM $originalFormQuestionsTable");
+
+            $employeesWithPEAccounts = Employees::whereHas('account', function ($query) {
+                $query->where('type', 'PE');
+            })->get();
+
+            foreach ($employeesWithPEAccounts as $employee) {
+                $evaluationTypes = ['self evaluation', 'is evaluation', 'internal customer 1', 'internal customer 2'];
+
+                foreach ($evaluationTypes as $evaluationType) {
+                    $evaluatorId = ($evaluationType === 'self evaluation') ? $employee->employee_id : null;
+
+                    Appraisals::create([
+                        'evaluation_type' => $evaluationType,
+                        'employee_id' => $employee->employee_id,
+                        'evaluator_id' => $evaluatorId,
+                    ]);
+                }
+            }
+
+
+            return redirect()->back()->with('success', 'Evaluation Year added successfully.');
+        }
     }
 }

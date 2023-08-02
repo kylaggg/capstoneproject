@@ -5,15 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
+use App\Models\EvalYear;
 
 class Appraisals extends Model
 {
     use HasFactory;
 
-    protected $table = 'appraisals_2023_2024';
     protected $primaryKey = 'appraisal_id';
-    public $timestamps = true;
+    public $timestamps = false;
 
     protected $fillable = [
         'evaluation_type',
@@ -21,8 +20,19 @@ class Appraisals extends Model
         'evaluator_id',
         'date_submitted',
         'status',
-        'signature'
+        'signature',
     ];
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        $activeEvaluationYear = EvalYear::where('status', 'active')->first();
+        if ($activeEvaluationYear) {
+            $activeYear = 'appraisals_' . $activeEvaluationYear->sy_start . '_' . $activeEvaluationYear->sy_end;
+            $this->setTable($activeYear);
+        }
+    }
 
     public function employee(): BelongsTo
     {
@@ -34,3 +44,5 @@ class Appraisals extends Model
         return $this->belongsTo(Employees::class, 'evaluator_id')->with('department');
     }
 }
+
+?>

@@ -223,8 +223,6 @@
                 });
             }
 
-
-
             loadEvaluationYearTable();
         });
     </script>
